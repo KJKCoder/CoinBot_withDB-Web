@@ -9,7 +9,7 @@ access = ""
 secret = ""
 upbit = pyupbit.Upbit(access, secret)
 
-LongStrategyCoin = ["KRW-IQ","KRW-SRM","KRW-SAND","KRW-XEM","KRW-ADA"] ; Forbidden_Coin = ['KRW-ETH', 'KRW-BTC', 'KRW-BTT', 'KRW-XEC']
+LongStrategyCoin = ["KRW-IQ","KRW-SRM","KRW-SAND"] ; Forbidden_Coin = ['KRW-BTC', 'KRW-BTT', 'KRW-XEC']
 total = 60000
 left = 60000
 # K값, 동시 구매 가능한 코인 개수
