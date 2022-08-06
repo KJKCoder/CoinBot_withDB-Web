@@ -1,0 +1,38 @@
+<h1>Coin Bot Monitoring DB</h1>
+
+<body>
+
+    <h3>Total</h3>
+
+    <p>
+        <ul>
+            <li><a href = "{% url 'searchData:total' %}"> 총 수익률, 거래횟수 </a></li>
+        </ul>
+    </p>
+
+    <h3>Filtering</h3>
+
+    <p>
+        <ul>
+            <form action="{% url 'searchData:filter' %}" method="post">
+                {% csrf_token %}
+                <li>날짜별 보기</li> 
+                <input type="text" name="date" value=''>ex: 2022-08-04
+                <br><input type="submit" value="전송"/>
+                <li>코인별 보기</li>
+                <input type="text" name="ticker" value=''>ex: KRW-BTC
+                <br><input type="submit" value="전송"/>
+            </form>
+        </ul>
+    </p>
+
+    <h3>Ordered</h3>
+
+    <p>
+        <ul>
+            <li><a href = "{% url 'searchData:ordered_Date' %}">최근 날짜 30일</a></li>
+            <li><a href = "{% url 'searchData:ordered_Ticker' %}">거래량 순위 30위</a></li>
+        </ul>
+    </p>
+
+</body>

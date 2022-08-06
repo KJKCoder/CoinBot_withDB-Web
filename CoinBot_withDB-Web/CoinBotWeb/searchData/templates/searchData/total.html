@@ -1,0 +1,14 @@
+<h1>Coin Bot Monitoring DB</h1>
+<h2>Total</h2>
+<body>
+    
+    {% if total_Data %}
+        <ul>
+            <li>총 수익률 : {{total_Data.Profit}}</li>
+            <li>총 거래횟수 : {{total_Data.Trade}}</li>
+        </ul>
+    {% else %}
+        <p> No Data are available </p>
+    {% endif %}
+
+</body>
