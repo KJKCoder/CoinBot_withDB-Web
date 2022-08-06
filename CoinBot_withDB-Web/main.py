@@ -8,7 +8,7 @@ if __name__ == '__main__' :
         print('start')
         threads = []
 
-        t = threading.Thread(target=os.system, args=(f'python manage.py runserver 0.0.0.0:{3000}',), daemon=True)
+        t = threading.Thread(target=os.system, args=(f'python3 manage.py runserver 0.0.0.0:{3000}',), daemon=True)
         t.start()
         threads.append(t)
 
