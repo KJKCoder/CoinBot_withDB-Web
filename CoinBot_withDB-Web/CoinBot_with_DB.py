@@ -5,8 +5,8 @@ import random
 from slack_msg import * ; from DMLfunc import *
 
 # access키와 secret키 입력
-access = "NPfpM0dzWFH45GqsHcrt2InxtDoVxfBYopy3wBhp"
-secret = "EyqbK9Z5LfqGxrUxMqLo0gz4A8ZVUJ4qUhQOyDME"
+access = ""
+secret = ""
 upbit = pyupbit.Upbit(access, secret)
 
 LongStrategyCoin = ["KRW-IQ","KRW-SRM","KRW-SAND","KRW-XEM","KRW-ADA"] ; Forbidden_Coin = ['KRW-ETH', 'KRW-BTC', 'KRW-BTT', 'KRW-XEC']
