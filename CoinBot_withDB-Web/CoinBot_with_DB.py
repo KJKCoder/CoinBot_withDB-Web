@@ -175,8 +175,8 @@ def Get_CoinList_acc_trade() :
     response = requests.request("GET", url, headers=headers,params=querystring)
     time.sleep(0.2)
 
-    df = pd.DataFrame(response.json()).loc[start_rank:start_rank+30,["acc_trade_price_24h","market"]]
-    sorteddf = df.sort_values(by=df.columns[0],ascending=False).reset_index(drop=True)
+    df = pd.DataFrame(response.json()).loc[:,["acc_trade_price_24h","market"]]
+    sorteddf = df.sort_values(by=df.columns[0],ascending=False).reset_index(drop=True).loc[start_rank:start_rank+30]
     templist = sorteddf["market"].tolist()
 
     temp = get_My_CoinList()
