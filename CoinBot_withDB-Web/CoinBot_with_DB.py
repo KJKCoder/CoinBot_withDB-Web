@@ -15,7 +15,7 @@ left = 60000
 # K값, 동시 구매 가능한 코인 개수
 K_value = 0.3
 Limit_Value = 10 ; buy_Persent = 0.1
-Date_ID = 0 ; start_rank = 0
+Date_ID = 0 ; start_rank = 10
 
 CoinInfo = defaultdict(dict)
 CoinList = [] ; Coin_Target = {} ; Coin_MA15 = {}
