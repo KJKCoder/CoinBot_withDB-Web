@@ -205,7 +205,7 @@ def Get_CoinList_acc_trade() :
     message = "Today's Target : \n" + str(CoinList) 
     Prt_and_Slack(message)
     
-    message = "balances : + str(left) 
+    message = "balances : "+ str(left) 
     Prt_and_Slack(message)
 
     return 1
