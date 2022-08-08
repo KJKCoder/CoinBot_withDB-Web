@@ -181,7 +181,7 @@ def Get_CoinList_acc_trade() :
         Prt_and_Slack(message)
     Connection_close('db.sqlite3')
     
-    #sold_all_Coin()
+    sold_all_Coin()
     CoinList = [] ; Coin_Target = {} ; Coin_MA15 = {}
     CoinInfo = defaultdict(dict)
 
