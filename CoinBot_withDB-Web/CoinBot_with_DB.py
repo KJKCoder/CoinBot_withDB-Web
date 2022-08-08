@@ -3,6 +3,7 @@ import pyupbit ; import requests; import pandas as pd
 from os import system ; from collections import defaultdict
 import random
 from slack_msg import * ; from DMLfunc import *
+from get_orderd_ticker import *
 
 # access키와 secret키 입력
 access = ""
@@ -180,20 +181,12 @@ def Get_CoinList_acc_trade() :
         Prt_and_Slack(message)
     Connection_close('db.sqlite3')
     
-    sold_all_Coin()
+    #sold_all_Coin()
     CoinList = [] ; Coin_Target = {} ; Coin_MA15 = {}
     CoinInfo = defaultdict(dict)
 
-    krw_tickers = pyupbit.get_tickers("KRW")
-    querystring = {"markets":krw_tickers}
-    url = "https://api.upbit.com/v1/ticker" #업비트 주소2
-    headers = {"Accept": "application/json"}
-    response = requests.request("GET", url, headers=headers,params=querystring)
-    time.sleep(0.2)
-
-    df = pd.DataFrame(response.json()).loc[:,["acc_trade_price_24h","market"]]
-    sorteddf = df.sort_values(by=df.columns[0],ascending=False).reset_index(drop=True).loc[start_rank:start_rank+30]
-    templist = sorteddf["market"].tolist()
+    
+    templist = get_testcases(datetime.datetime.now() - timedelta(1), 'signedChangeRate', 0)
 
     temp = get_My_CoinList()
 
@@ -207,7 +200,7 @@ def Get_CoinList_acc_trade() :
             if (len(CoinSet) >= Limit_Value) : break
 
     CoinList = list(CoinSet)
-    
+
     message = "Today's Target : \n" + str(CoinList) 
     Prt_and_Slack(message)
     
@@ -297,3 +290,6 @@ def run():
         except Exception as e :
             message = str(e) + " is Error Occured"
             Prt_and_Slack(message)
+
+if __name__ == '__main__' :
+    run()
