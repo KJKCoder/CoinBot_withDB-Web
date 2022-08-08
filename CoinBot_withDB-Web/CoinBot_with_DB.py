@@ -163,15 +163,18 @@ def Get_CoinList_acc_trade() :
     global CoinList
     global CoinInfo
     global Coin_Target, Coin_MA15, Date_ID
-    
+        
     # 데이터 기록
     Connection_open('db.sqlite3')
-
-    record_date(datetime.now().date())
     Date_ID = get_DateID_last()
-    record_btc_eth(Date_ID, 'KRW-BTC', get_start_price('KRW-BTC'), get_ma15('KRW-BTC'))
-    record_btc_eth(Date_ID, 'KRW-ETH', get_start_price('KRW-ETH'), get_ma15('KRW-ETH'))
-
+    try:
+        record_date(datetime.now().date())
+        Date_ID = get_DateID_last()
+        record_btc_eth(Date_ID, 'KRW-BTC', get_start_price('KRW-BTC'), get_ma15('KRW-BTC'))
+        record_btc_eth(Date_ID, 'KRW-ETH', get_start_price('KRW-ETH'), get_ma15('KRW-ETH'))
+    except Exception as e:
+        message = "Error while INIT : " + str(e) 
+        Prt_and_Slack(message)
     Connection_close('db.sqlite3')
     
     sold_all_Coin()
@@ -258,12 +261,9 @@ def check_running_right() :
 def run():
     schedule.every(3).hours.do(check_running_right)
     schedule.every().day.at("09:00:30").do(Get_CoinList_acc_trade)
-    try:
-        Get_CoinList_acc_trade()
-        Prt_and_Slack("Start Program")
-    except Exception as e:
-        message = "Error while INIT : " + str(e) 
-        Prt_and_Slack(message)
+    
+    Get_CoinList_acc_trade()
+    Prt_and_Slack("Start Program")
         
     while(True) :
         try:
