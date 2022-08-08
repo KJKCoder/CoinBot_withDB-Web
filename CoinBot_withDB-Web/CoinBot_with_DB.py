@@ -166,7 +166,10 @@ def Get_CoinList_acc_trade() :
         
     # 데이터 기록
     Connection_open('db.sqlite3')
-    Date_ID = get_DateID_last()
+    try:
+        Date_ID = get_DateID_last()
+    except:
+        Date_ID = 0
     try:
         record_date(datetime.now().date())
         Date_ID = get_DateID_last()
