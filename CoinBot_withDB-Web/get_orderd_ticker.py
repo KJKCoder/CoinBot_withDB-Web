@@ -24,10 +24,11 @@ def get_testcases(order_by = 'acc_trade_price_24h', rank = 0) :
         for ticker in tickers :
             try:
                 temp = pyupbit.get_ohlcv(ticker = ticker, interval= "day", count= 2).iloc[0]
-                DF = DF.append({'ticker':ticker, 'rate':temp['open']/temp['close']}, ignore_index=True)
+                temp = pd.DataFrame({'ticker':[ticker], 'rate':[temp['open']/temp['close']]})
+                DF = pd.concat([DF,temp])
+                print(DF)
             except Exception as e:
                 continue
-
         templist = DF.sort_values('rate', ascending= False).iloc[rank:rank+30]['ticker'].tolist()
 
     return templist
