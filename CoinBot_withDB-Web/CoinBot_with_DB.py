@@ -270,11 +270,11 @@ def run():
         try:
             schedule.run_pending()
             
-            print(CoinList)
+            #print(CoinList)
 
             for curCoin in CoinList :
                 curPrice = get_current_price(curCoin)
-                print(curCoin, curPrice, Coin_MA15[curCoin], Coin_Target[curCoin])
+                #print(curCoin, curPrice, Coin_MA15[curCoin], Coin_Target[curCoin])
                 
                 if curPrice > Coin_Target[curCoin] and curPrice > Coin_MA15[curCoin] :
                     buy(curCoin, buy_Persent)
@@ -290,7 +290,7 @@ def run():
                     sell(curCoin, curPrice)
                 elif (CoinInfo[curCoin]["BuyPrice"] > 0) & (CoinInfo[curCoin]["BuyPrice"]*1.12 < curPrice) : 
                     sell(curCoin, curPrice)
-            print(CoinInfo)
+            #print(CoinInfo)
 
         except Exception as e :
             message = str(e) + " is Error Occured"
