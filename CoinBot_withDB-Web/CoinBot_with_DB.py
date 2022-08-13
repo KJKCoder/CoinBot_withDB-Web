@@ -14,7 +14,7 @@ total = 60000
 left = 60000
 # K값, 동시 구매 가능한 코인 개수
 K_value = 0.3
-Limit_Value = 10 ; buy_Persent = 0.1
+Limit_Value = 10 ; buy_Persent = 0.1 ; TP_Value = 1.02 ; Max_Profit = 1.12
 Date_ID = 0 ; get_ticker_order_by = 'acc_trade_price_24h' ; start_rank = 10
 
 CoinInfo = defaultdict(dict)
@@ -135,7 +135,7 @@ def Set_CoinInfo():
             CoinInfo[curCoin]["HighPrice"] = curPrice
         CoinInfo[curCoin]["BuyPrice"] = get_buy_avg_Price(curCoin)
         CoinInfo[curCoin]["StopLoss"] = CoinInfo[curCoin]["BuyPrice"]*0.8
-        if CoinInfo[curCoin]["BuyPrice"]*1.02 < curPrice :
+        if CoinInfo[curCoin]["BuyPrice"] * TP_Value < curPrice :
             CoinInfo[curCoin]["TimeProfit"] = (CoinInfo[curCoin]["HighPrice"] + CoinInfo[curCoin]["BuyPrice"])*0.5
 
         if curCoin in LongStrategyCoin :
@@ -288,7 +288,7 @@ def run():
                     sell(curCoin, curPrice)
                 elif CoinInfo[curCoin]["StopLoss"] > curPrice :
                     sell(curCoin, curPrice)
-                elif (CoinInfo[curCoin]["BuyPrice"] > 0) & (CoinInfo[curCoin]["BuyPrice"]*1.12 < curPrice) : 
+                elif (CoinInfo[curCoin]["BuyPrice"] > 0) & (CoinInfo[curCoin]["BuyPrice"] * Max_Profit < curPrice) : 
                     sell(curCoin, curPrice)
             #print(CoinInfo)
 
