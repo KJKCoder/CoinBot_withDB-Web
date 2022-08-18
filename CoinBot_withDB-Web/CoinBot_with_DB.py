@@ -13,9 +13,9 @@ LongStrategyCoin = ["KRW-IQ","KRW-SRM","KRW-SAND"] ; Forbidden_Coin = ['KRW-BTC'
 total = 60000
 left = 60000
 # K값, 동시 구매 가능한 코인 개수
-K_value = 0.3
-Limit_Value = 10 ; buy_Persent = 0.1 ; TP_Value = 1.02 ; Max_Profit = 1.12
-Date_ID = 0 ; get_ticker_order_by = 'acc_trade_price_24h' ; start_rank = 10
+K_value = 0
+Limit_Value = 10 ; buy_Persent = 0.1 ; TP_Value = 1.015 ; Max_Profit = 1.12 ; MA_range = 1.1 ; SL_Value = 0.88
+Date_ID = 0 ; get_ticker_order_by = 'signed_change_rate' ; start_rank = 10
 
 CoinInfo = defaultdict(dict)
 CoinList = [] ; Coin_Target = {} ; Coin_MA15 = {}
@@ -101,7 +101,7 @@ def sell(coin, currentprice):
 
 #수익 계산
 def Calculate_Profit(buyprice, soldprice) :
-    return (soldprice-buyprice)/buyprice
+    return (soldprice-buyprice)/buyprice - 0.001
 
 # 잔고 조회
 def get_balance(currency):                          
@@ -134,7 +134,7 @@ def Set_CoinInfo():
         if CoinInfo[curCoin]["HighPrice"] <= curPrice :
             CoinInfo[curCoin]["HighPrice"] = curPrice
         CoinInfo[curCoin]["BuyPrice"] = get_buy_avg_Price(curCoin)
-        CoinInfo[curCoin]["StopLoss"] = CoinInfo[curCoin]["BuyPrice"]*0.8
+        CoinInfo[curCoin]["StopLoss"] = CoinInfo[curCoin]["BuyPrice"]*SL_Value
         if CoinInfo[curCoin]["BuyPrice"] * TP_Value < curPrice :
             CoinInfo[curCoin]["TimeProfit"] = (CoinInfo[curCoin]["HighPrice"] + CoinInfo[curCoin]["BuyPrice"])*0.5
 
@@ -200,7 +200,10 @@ def Get_CoinList_acc_trade() :
     for curCoin in templist:
         if (not(curCoin in temp) and not(curCoin in Forbidden_Coin)) :
             CoinSet.add(curCoin)
-            Coin_Target[curCoin] = get_target_price(curCoin,"day", K_value)
+            if K_value == 0:
+                Coin_Target[curCoin] = 0
+            else:
+                Coin_Target[curCoin] = get_target_price(curCoin,"day", K_value)
             Coin_MA15[curCoin] = get_ma15(curCoin)
             if (len(CoinSet) >= Limit_Value) : break
 
@@ -276,7 +279,7 @@ def run():
                 curPrice = get_current_price(curCoin)
                 #print(curCoin, curPrice, Coin_MA15[curCoin], Coin_Target[curCoin])
                 
-                if curPrice > Coin_Target[curCoin] and curPrice > Coin_MA15[curCoin] :
+                if curPrice > Coin_Target[curCoin] and curPrice > Coin_MA15[curCoin]*MA_range :
                     buy(curCoin, buy_Persent)
 
             initialize()
@@ -297,4 +300,4 @@ def run():
             Prt_and_Slack(message)
 
 if __name__ == '__main__' :
-    run()
+    print(get_testcases(get_ticker_order_by, start_rank))
